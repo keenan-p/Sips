@@ -92,16 +92,20 @@ public class MainActivity extends AppCompatActivity {
             JSONObject jObj = new JSONObject(beverageJsonStr);
             JSONArray jArray = jObj.getJSONArray("drinks");
             ArrayList<Beverage> recipes = new ArrayList<>();
+
             for (int i = 0; i < jArray.length(); i++){
                 String name = jArray.getJSONObject(i).getString("strDrink");
                 ArrayList<String> ingredients = new ArrayList<>();
                 int j = 0;
-                while (jArray.getJSONObject(i).getString("strIngredient"+(j+1)).equals("") == false){
+                while (!jArray.getJSONObject(i).getString("strIngredient" + (j + 1)).equals("")){
                     String part1 = jArray.getJSONObject(i).getString("strMeasure"+(j+1));
-                    if (part1.endsWith(" ") == false){
+
+                    if (!part1.endsWith(" ")){
                         part1 = part1 + " ";
                     }
-                    String part2 = jArray.getJSONObject(i).getString("strIngredient"+(j+1));
+                    String part2;
+                    part2 = jArray.getJSONObject(i).getString("strIngredient"+(j+1));
+
                     if (part1.contains("\n")){
                         part1 = part1.substring(0, part1.indexOf("\n"));
                     } else if (part2.contains("\n")) {
@@ -109,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if (part1.equals(" ")){
                         part1 = "";
                     }
+
                     String finalString = part1 + part2;
                     ingredients.add(finalString);
                     j++;
@@ -116,7 +121,10 @@ public class MainActivity extends AppCompatActivity {
                     j = 0;
                     String instructions = jArray.getJSONObject(i).getString("strInstructions");
                     String thumbnailUrl = jArray.getJSONObject(i).getString("strDrinkThumb");
+
+                    System.out.println(name);
                     Beverage beverage = new Beverage(name, ingredients, instructions, thumbnailUrl);
+                    recipes.add(beverage);
                 }
                 return recipes;
             }
@@ -193,6 +201,8 @@ public class MainActivity extends AppCompatActivity {
 
                 // Load the text first.
                 int componentIndex = 0;
+
+                System.out.println(result.size());
 
                 while (componentIndex < result.size()) {
                     beverages.add(result.get(componentIndex));
