@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.apache.http.conn.ssl.BrowserCompatHostnameVerifier;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Bevs");
 
         beverages = new ArrayList<>();
-        beverages.add(new Beverage("Use the search bar to find beverages."));
+        beverages.add(new Beverage("Use the search bar to find beverages.", null, "", ""));
 
         ListView beveragesListView = findViewById(R.id.drink_list);
 
@@ -77,49 +78,53 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     beverages.clear();
-                    beverages.add(new Beverage("No internet connection."));
+                    beverages.add(new Beverage("No internet connection.", null, "", ""));
                     adapter.notifyDataSetChanged();
                 }
             }
         });
     }
 
-    private class FetchBeveragesTask extends AsyncTask<String, Void, String[]> {
+    private class FetchBeveragesTask extends AsyncTask<String, Void, ArrayList<Beverage>> {
 
-        private String[] getBeverageDataFromJson(String beverageJsonStr) throws JSONException {
+        private ArrayList<Beverage> getBeverageDataFromJson(String beverageJsonStr) throws JSONException {
 
-            final String DRINKS_ARRAY = "drinks";
-            final String STR_DRINK = "strDrink";
-
-            final String NO_IMAGE_AVAILABLE = "https://upload.wikimedia.org/wikipedia/commons" +
-                    "/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png";
-
-            int resultStringsIndex = 0;
-
-            JSONObject drinkJson = new JSONObject(beverageJsonStr);
-            JSONArray drinksList = drinkJson.getJSONArray(DRINKS_ARRAY);
-
-            final int MAX_NUM_DRINKS = drinksList.length();
-            final int NUM_DRINK_COMPONENTS = 1;
-            String[] resultStrings = new String[MAX_NUM_DRINKS * NUM_DRINK_COMPONENTS];
-
-            // get info from the first 2 search results
-            for (int searchResultIndex = 0; searchResultIndex < drinksList.length(); searchResultIndex++) {
-                String drinkName;
-                String thumbnailURL;
-
-                JSONObject drinkInfo = drinksList.getJSONObject(searchResultIndex);
-                drinkName = drinkInfo.getString(STR_DRINK);
-
-                resultStrings[resultStringsIndex] = drinkName;
-                resultStringsIndex += NUM_DRINK_COMPONENTS;
+            JSONObject jObj = new JSONObject(beverageJsonStr);
+            JSONArray jArray = jObj.getJSONArray("drinks");
+            ArrayList<Beverage> recipes = new ArrayList<>();
+            for (int i = 0; i < jArray.length(); i++){
+                String name = jArray.getJSONObject(i).getString("strDrink");
+                ArrayList<String> ingredients = new ArrayList<>();
+                int j = 0;
+                while (jArray.getJSONObject(i).getString("strIngredient"+(j+1)).equals("") == false){
+                    String part1 = jArray.getJSONObject(i).getString("strMeasure"+(j+1));
+                    if (part1.endsWith(" ") == false){
+                        part1 = part1 + " ";
+                    }
+                    String part2 = jArray.getJSONObject(i).getString("strIngredient"+(j+1));
+                    if (part1.contains("\n")){
+                        part1 = part1.substring(0, part1.indexOf("\n"));
+                    } else if (part2.contains("\n")) {
+                        part2 = part2.substring(0, part2.indexOf("\n"));
+                    } else if (part1.equals(" ")){
+                        part1 = "";
+                    }
+                    String finalString = part1 + part2;
+                    ingredients.add(finalString);
+                    j++;
+                    }
+                    j = 0;
+                    String instructions = jArray.getJSONObject(i).getString("strInstructions");
+                    String thumbnailUrl = jArray.getJSONObject(i).getString("strDrinkThumb");
+                    Beverage beverage = new Beverage(name, ingredients, instructions, thumbnailUrl);
+                }
+                return recipes;
             }
 
-            return resultStrings;
-        }
+
 
         @Override
-        protected String[] doInBackground(String... params) {
+        protected ArrayList<Beverage> doInBackground(String... params) {
 
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
@@ -182,22 +187,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String[] result) {
+        protected void onPostExecute(ArrayList<Beverage> result) {
             if (result != null) {
                 beverages.clear();
 
                 // Load the text first.
                 int componentIndex = 0;
 
-                while (componentIndex < result.length) {
-                    beverages.add(new Beverage(result[componentIndex]));
+                while (componentIndex < result.size()) {
+                    beverages.add(result.get(componentIndex));
                     componentIndex++;
                 }
                 adapter.notifyDataSetChanged();
             }
             else {
                 beverages.clear();
-                beverages.add(new Beverage("There are no results that match your search"));
+                beverages.add(new Beverage("There are no results that match your search", null, "", ""));
                 adapter.notifyDataSetChanged();
             }
         }
