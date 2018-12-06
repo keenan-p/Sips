@@ -8,15 +8,20 @@ class Beverage {
 
     private String name;
     private Bitmap thumbnail;
-    private ArrayList<String> ingredients;
+    private String ingredients;
     private String imageSource;
     private String recipe;
 
-    public Beverage (String name, ArrayList<String> ingredients, String recipe, String imageSource) {
+    public Beverage (String name, ArrayList<String> ingredientsArray, String recipe, String imageSource) {
         this.name = name;
-        this.ingredients = ingredients;
         this.imageSource = imageSource;
         this.recipe = recipe;
+        String ingredients = "";
+        for (int i = 0; i < ingredientsArray.size(); i++){
+            ingredients = ingredients + "- "+ingredientsArray.get(i)+"\n";
+        }
+        ingredients = ingredients.substring(0, ingredients.lastIndexOf('\n'));
+        this.ingredients = ingredients;
     }
 
     public void setName(String name) {
@@ -35,7 +40,7 @@ class Beverage {
         return thumbnail;
     }
 
-    public ArrayList<String> getIngredients() {
+    public String getIngredients() {
         return ingredients;
     }
 
@@ -47,7 +52,7 @@ class Beverage {
         return recipe;
     }
 
-    public void setIngredients(ArrayList<String> ingredients) {
+    public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
 
