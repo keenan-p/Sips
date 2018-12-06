@@ -43,9 +43,6 @@ class BeverageAdapter extends ArrayAdapter<Beverage> {
                 .load(currBeverage.getImageSource())
                 .into((ImageView) listElement.findViewById(R.id.bev_thumbnail));
 
-//        ImageView beverageThumbnail = (ImageView) listElement.findViewById(R.id.bev_thumbnail);
-//        beverageThumbnail.setImageBitmap(currBeverage.getThumbnail());
-
         return listElement;
     }
 }

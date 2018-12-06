@@ -2,6 +2,7 @@ package com.example.android.bevs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -39,10 +41,6 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
 
         return (activeNetworkInfo != null && activeNetworkInfo.isConnected());
-
-//        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting() &&
-//                manager.getActiveNetworkInfo().isAvailable() &&
-//                manager.getActiveNetworkInfo().isConnected();
 
     }
 
@@ -76,6 +74,18 @@ public class MainActivity extends AppCompatActivity {
 
         searchBar = findViewById(R.id.search_bar);
         Button submit = findViewById(R.id.submit);
+
+        beveragesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Beverage beverage = beverages.get(position);
+                Intent recipeIntent = new Intent(MainActivity.this, RecipeActivity.class);
+                recipeIntent.putExtra("imgURL", beverage.getImageSource());
+                recipeIntent.putExtra("ingredients", beverage.getIngredients());
+                recipeIntent.putExtra("recipe", beverage.getRecipe());
+                startActivity(recipeIntent);
+            }
+        });
 
         final Activity mainActivity = this;
 

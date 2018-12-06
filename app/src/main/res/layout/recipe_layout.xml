@@ -13,6 +13,11 @@
         android:scaleType="centerCrop"/>
 
     <TextView
+        android:id="@+id/ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
         android:id="@+id/recipe"
         android:layout_width="match_parent"
         android:text="Cut the half lime in half again.

@@ -17,10 +17,13 @@ class Beverage {
         this.imageSource = imageSource;
         this.recipe = recipe;
         String ingredients = "";
-        for (int i = 0; i < ingredientsArray.size(); i++){
-            ingredients = ingredients + "- "+ingredientsArray.get(i)+"\n";
+
+        if (ingredientsArray != null) {
+            for (int i = 0; i < ingredientsArray.size(); i++) {
+                ingredients = ingredients + "- " + ingredientsArray.get(i) + "\n";
+            }
+            ingredients = ingredients.substring(0, ingredients.lastIndexOf('\n'));
         }
-        ingredients = ingredients.substring(0, ingredients.lastIndexOf('\n'));
         this.ingredients = ingredients;
     }
 
