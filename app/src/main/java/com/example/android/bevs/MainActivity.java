@@ -175,8 +175,6 @@ public class MainActivity extends AppCompatActivity {
                 // read the input stream into the string
                 InputStream inputStream = urlConnection.getInputStream();
                 StringBuilder buffer = new StringBuilder();
-                if (inputStream == null) {
-                }
                 reader = new BufferedReader(new InputStreamReader(inputStream));
 
                 String line;
