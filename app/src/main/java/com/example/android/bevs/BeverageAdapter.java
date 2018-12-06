@@ -39,6 +39,10 @@ class BeverageAdapter extends ArrayAdapter<Beverage> {
         TextView beverageName = listElement.findViewById(R.id.bev_name_text_view);
         beverageName.setText(Objects.requireNonNull(currBeverage).getName());
 
+        Glide.with(context)
+                .load(currBeverage.getImageSource())
+                .into((ImageView) listElement.findViewById(R.id.bev_thumbnail));
+
 //        ImageView beverageThumbnail = (ImageView) listElement.findViewById(R.id.bev_thumbnail);
 //        beverageThumbnail.setImageBitmap(currBeverage.getThumbnail());
 

@@ -2,8 +2,6 @@ package com.example.android.bevs;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -13,13 +11,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import org.apache.http.conn.ssl.BrowserCompatHostnameVerifier;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,12 +36,26 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isConnectedToInternet() {
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
 
-        return networkInfo != null && networkInfo.isConnectedOrConnecting() &&
-                manager.getActiveNetworkInfo().isAvailable() &&
-                manager.getActiveNetworkInfo().isConnected();
+        return (activeNetworkInfo != null && activeNetworkInfo.isConnected());
 
+//        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting() &&
+//                manager.getActiveNetworkInfo().isAvailable() &&
+//                manager.getActiveNetworkInfo().isConnected();
+
+    }
+
+    // credit to the community wiki on stackoverflow for this function
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
@@ -65,8 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
         beveragesListView.setAdapter(adapter);
 
-        searchBar = (EditText) findViewById(R.id.search_bar);
-        Button submit = (Button) findViewById(R.id.submit);
+        searchBar = findViewById(R.id.search_bar);
+        Button submit = findViewById(R.id.submit);
+
+        final Activity mainActivity = this;
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     beverages.add(new Beverage("No internet connection.", null, "", ""));
                     adapter.notifyDataSetChanged();
                 }
+                hideKeyboard(mainActivity);
             }
         });
     }
@@ -118,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     ingredients.add(finalString);
                     j++;
                     }
-                    j = 0;
+
                     String instructions = jArray.getJSONObject(i).getString("strInstructions");
                     String thumbnailUrl = jArray.getJSONObject(i).getString("strDrinkThumb");
 
@@ -157,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 reader = new BufferedReader(new InputStreamReader(inputStream));
 
-                String line = "";
+                String line;
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line).append("\n");
                 }

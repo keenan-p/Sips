@@ -7,7 +7,6 @@ import java.util.ArrayList;
 class Beverage {
 
     private String name;
-    private String imageURL;
     private Bitmap thumbnail;
     private ArrayList<String> ingredients;
     private String imageSource;
