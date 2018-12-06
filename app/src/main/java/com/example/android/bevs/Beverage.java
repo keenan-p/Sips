@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 class Beverage {
 
     private String name;
+    private String imageURL;
     private Bitmap thumbnail;
 
     public Beverage (String name) {
