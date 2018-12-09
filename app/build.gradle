@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
+    sourceSets{
+        main.java.srcDirs += 'src/main/com.example.android.sips'
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.android.sips"

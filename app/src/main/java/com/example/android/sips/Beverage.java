@@ -16,15 +16,19 @@ class Beverage {
         this.name = name;
         this.imageSource = imageSource;
         this.recipe = recipe;
-        String ingredients = "";
+        this.ingredients = createIngredientsString(ingredientsArray);
 
+    }
+
+    public String createIngredientsString(ArrayList<String> ingredientsArray){
+        String ingredients = "";
         if (ingredientsArray != null) {
             for (int i = 0; i < ingredientsArray.size(); i++) {
                 ingredients = ingredients + "- " + ingredientsArray.get(i) + "\n";
             }
             ingredients = ingredients.substring(0, ingredients.lastIndexOf('\n'));
         }
-        this.ingredients = ingredients;
+        return ingredients;
     }
 
     public void setName(String name) {
