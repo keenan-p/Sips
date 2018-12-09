@@ -16,17 +16,18 @@ class Beverage {
         this.name = name;
         this.imageSource = imageSource;
         this.recipe = recipe;
-        this.ingredients = createIngredientsString(ingredientsArray);
+        this.ingredients = createIngredientsString(ingredientsArray); //to simplify the constructor, added a method to do the string creation
 
     }
 
-    public String createIngredientsString(ArrayList<String> ingredientsArray){
+    public String createIngredientsString(ArrayList<String> ingredientsArray){ //decided to transform the input from an ArrayList to String for easier display
         String ingredients = "";
         if (ingredientsArray != null) {
             for (int i = 0; i < ingredientsArray.size(); i++) {
-                ingredients = ingredients + "- " + ingredientsArray.get(i) + "\n";
+                ingredients = ingredients + "- " + ingredientsArray.get(i) + "\n"; //after this method, [1 oz tequila, 1 oz lime] will look like "- 1 oz tequila
+                                                                                                                                                //- 1 oz lime"
             }
-            ingredients = ingredients.substring(0, ingredients.lastIndexOf('\n'));
+            ingredients = ingredients.substring(0, ingredients.lastIndexOf('\n')); //remove the last newline
         }
         return ingredients;
     }

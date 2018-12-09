@@ -15,45 +15,45 @@ public class JsonParser {
     }
 
     public ArrayList<Beverage> parse() throws JSONException {
-        JSONObject jObj = new JSONObject(beverageJsonStr);
+        JSONObject jObj = new JSONObject(beverageJsonStr); //create a new JSON object and array
         JSONArray jArray = jObj.getJSONArray("drinks");
         ArrayList<Beverage> recipes = new ArrayList<>();
 
-        for (int i = 0; i < jArray.length(); i++){
-            String name = jArray.getJSONObject(i).getString("strDrink");
+        for (int i = 0; i < jArray.length(); i++){ //for each elemnt of the JSON array
+            String name = jArray.getJSONObject(i).getString("strDrink"); //grab the name of the drink
             ArrayList<String> ingredients = new ArrayList<>();
             int j = 0;
-            while (!jArray.getJSONObject(i).getString("strIngredient" + (j + 1)).equals("")){
-                String part1 = jArray.getJSONObject(i).getString("strMeasure"+(j+1));
-                String part2 = jArray.getJSONObject(i).getString("strIngredient"+(j+1));
-                String finalString = formatString(part1, part2);
+            while (!jArray.getJSONObject(i).getString("strIngredient" + (j + 1)).equals("")){ //while there are still more ingredients to read in
+                String part1 = jArray.getJSONObject(i).getString("strMeasure"+(j+1)); //grab the measure
+                String part2 = jArray.getJSONObject(i).getString("strIngredient"+(j+1)); //grab the ingredient
+                String finalString = formatString(part1, part2); //call method to format properly
                 ingredients.add(finalString);
                 j++;
             }
 
-            String instructions = jArray.getJSONObject(i).getString("strInstructions");
-            String thumbnailUrl = jArray.getJSONObject(i).getString("strDrinkThumb");
+            String instructions = jArray.getJSONObject(i).getString("strInstructions"); //grab the instructions
+            String thumbnailUrl = jArray.getJSONObject(i).getString("strDrinkThumb"); //grab the drink thumbnail
 
-            Beverage beverage = new Beverage(name, ingredients, instructions, thumbnailUrl);
-            recipes.add(beverage);
+            Beverage beverage = new Beverage(name, ingredients, instructions, thumbnailUrl); //create a new Beverage object with the previously gathered data
+            recipes.add(beverage); //add to the ArrayList
         }
         return recipes;
     }
 
-    public String formatString (String part1, String part2){
-        if (!part1.endsWith(" ")){
+    public String formatString (String part1, String part2){ //some of the database's strings were irregularly formatted
+        if (!part1.endsWith(" ")){ //add a space to any measures that do not end in a space
             part1 = part1 + " ";
         }
-        if (part1.contains("\n")){
+        if (part1.contains("\n")){ //if measure contains a newline, remove anything following the newline and add a space to follow it
             part1 = part1.substring(0, part1.indexOf("\n"))+" ";
         }
-        if (part2.contains("\n")) {
+        if (part2.contains("\n")) { //no need to add space following part2, since it is the end of the total string
             part2 = part2.substring(0, part2.indexOf("\n"));
         }
-        if (part1.equals(" ")){
+        if (part1.equals(" ")){ //sometimes, no measure is provided (just "Salt"). In this case, we eliminate this part of the string
             part1 = "";
         }
-        String finalString = part1 + part2;
+        String finalString = part1 + part2; //combined the two halves
         return finalString;
     }
 }
