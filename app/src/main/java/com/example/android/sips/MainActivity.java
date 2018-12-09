@@ -1,21 +1,27 @@
-package com.example.android.bevs;
+package com.example.android.sips;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,10 +67,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("Bevs");
+        setTitle("Sips");
 
         beverages = new ArrayList<>();
-        beverages.add(new Beverage("Use the search bar to find beverages.", null, "", ""));
+        beverages.add(new Beverage("Use the search bar to find beverages.", null, "",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Vector_search_icon.svg/200px-Vector_search_icon.svg.png"));
 
         ListView beveragesListView = findViewById(R.id.drink_list);
 
@@ -72,39 +79,75 @@ public class MainActivity extends AppCompatActivity {
 
         beveragesListView.setAdapter(adapter);
 
-        searchBar = findViewById(R.id.search_bar);
-        Button submit = findViewById(R.id.submit);
-
         beveragesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Beverage beverage = beverages.get(position);
                 Intent recipeIntent = new Intent(MainActivity.this, RecipeActivity.class);
+                recipeIntent.putExtra("name", beverage.getName());
                 recipeIntent.putExtra("imgURL", beverage.getImageSource());
                 recipeIntent.putExtra("ingredients", beverage.getIngredients());
                 recipeIntent.putExtra("recipe", beverage.getRecipe());
                 startActivity(recipeIntent);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // inflate menu
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final MenuItem searchMenuItem = menu.findItem(R.id.search_bar);
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        searchView.setSubmitButtonEnabled(true);
 
         final Activity mainActivity = this;
 
-        submit.setOnClickListener(new View.OnClickListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onQueryTextSubmit(String query) {
                 if (isConnectedToInternet()) {
-                    String searchQuery = searchBar.getText().toString();
                     FetchBeveragesTask beveragesTask = new FetchBeveragesTask();
-                    beveragesTask.execute(searchQuery);
+                    beveragesTask.execute(query);
+                    searchMenuItem.collapseActionView();
+                    hideKeyboard(mainActivity);
                 }
                 else {
                     beverages.clear();
                     beverages.add(new Beverage("No internet connection.", null, "", ""));
                     adapter.notifyDataSetChanged();
                 }
-                hideKeyboard(mainActivity);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
         });
+
+        searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                hideKeyboard(mainActivity);
+                return true;
+            }
+        });
+
+        return true;
     }
 
     private class FetchBeveragesTask extends AsyncTask<String, Void, ArrayList<Beverage>> {
@@ -144,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
                     String instructions = jArray.getJSONObject(i).getString("strInstructions");
                     String thumbnailUrl = jArray.getJSONObject(i).getString("strDrinkThumb");
 
-                    System.out.println(name);
                     Beverage beverage = new Beverage(name, ingredients, instructions, thumbnailUrl);
                     recipes.add(beverage);
                 }
@@ -221,8 +263,6 @@ public class MainActivity extends AppCompatActivity {
 
                 // Load the text first.
                 int componentIndex = 0;
-
-                System.out.println(result.size());
 
                 while (componentIndex < result.size()) {
                     beverages.add(result.get(componentIndex));

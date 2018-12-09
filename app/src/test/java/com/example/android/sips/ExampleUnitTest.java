@@ -1,4 +1,4 @@
-package com.example.android.bevs;
+package com.example.android.sips;
 
 import org.junit.Test;
 

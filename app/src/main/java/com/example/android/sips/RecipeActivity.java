@@ -1,4 +1,4 @@
-package com.example.android.bevs;
+package com.example.android.sips;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -16,9 +16,12 @@ public class RecipeActivity extends AppCompatActivity {
         setContentView(R.layout.recipe_layout);
 
         Intent recipeIntent = getIntent();
+        String name = recipeIntent.getStringExtra("name");
         String imgURL = recipeIntent.getStringExtra("imgURL");
         String ingredients = recipeIntent.getStringExtra("ingredients");
         String recipe = recipeIntent.getStringExtra("recipe");
+
+        setTitle(name);
 
         ImageView beverageImageView = findViewById(R.id.beverage_image);
         TextView ingredientsTextView = findViewById(R.id.ingredients);
