@@ -23,10 +23,12 @@ public class RecipeActivity extends AppCompatActivity {
 
         setTitle(name);
 
+        TextView beverageTextView = findViewById(R.id.beverage_name);
         ImageView beverageImageView = findViewById(R.id.beverage_image);
         TextView ingredientsTextView = findViewById(R.id.ingredients);
         TextView recipeTextView = findViewById(R.id.recipe);
 
+        beverageTextView.setText(name);
         ingredientsTextView.setText(ingredients);
         recipeTextView.setText(recipe);
 

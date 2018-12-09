@@ -27,6 +27,7 @@
         </activity>
         <activity
             android:name="com.example.android.sips.RecipeActivity"
+            android:theme="@style/RecipeTheme"
             android:parentActivityName="com.example.android.sips.MainActivity">
         </activity>
     </application>

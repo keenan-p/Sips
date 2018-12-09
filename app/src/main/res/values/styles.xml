@@ -9,4 +9,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="RecipeTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
+    </style>
+
+    <style name="ActionBarStyle" parent="Theme.AppCompat.Light.DarkActionBar" >
+        <item name="android:titleTextStyle">@style/ActionBarTitle</item>
+    </style>
+
+    <style name="ActionBarTitle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
 </resources>
