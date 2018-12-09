@@ -6,14 +6,26 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Class the parse a JSON object
+ */
 public class JsonParser {
 
     private String beverageJsonStr;
 
+    /**
+     * Constructor for the class
+     * @param beverageJsonStr the JSON string which will be used to make JSON object
+     */
     public JsonParser(String beverageJsonStr) {
         this.beverageJsonStr = beverageJsonStr;
     }
 
+    /**
+     * Method to parse JSON
+     * @return ArrayList<Beverage> beverages found in the JSON
+     * @throws JSONException if JSON is not found
+     */
     public ArrayList<Beverage> parse() throws JSONException {
         JSONObject jObj = new JSONObject(beverageJsonStr); //create a new JSON object and array
         JSONArray jArray = jObj.getJSONArray("drinks");
@@ -40,6 +52,12 @@ public class JsonParser {
         return recipes;
     }
 
+    /**
+     * Method to format ingredients string
+     * @param part1 the "measure" part of the string
+     * @param part2 the "ingredient" part of the string
+     * @return a string formatting and combining parts 1 and 2
+     */
     public String formatString (String part1, String part2){ //some of the database's strings were irregularly formatted
         if (!part1.endsWith(" ")){ //add a space to any measures that do not end in a space
             part1 = part1 + " ";

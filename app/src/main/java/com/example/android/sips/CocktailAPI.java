@@ -11,14 +11,25 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * Class that connects to and queries API
+ */
 public class CocktailAPI {
 
     private String param;
 
+    /**
+     * Constructor for the class
+     * @param param the search terms which will be asked for from the API
+     */
     public CocktailAPI(String param) {
         this.param = param;
     }
 
+    /**
+     * Method to connect to and query the API
+     * @return a String representing the JSON returned by the API
+     */
     public String getCocktailJson() {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
@@ -65,6 +76,11 @@ public class CocktailAPI {
         return beverageJsonStr;
     }
 
+    /**
+     * Method to construct a URL to query
+     * @param param the search terms entered by the user
+     * @return String representing URL which will be contacted
+     */
     public String buildURL(String param){
         final String DRINK_BASE_URL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?"; //this appears for all queries
         final String QUERY_PARAM = "s="; //for all drinks, we use this parameter
