@@ -24,13 +24,8 @@ public class CocktailAPI {
         BufferedReader reader = null;
         String beverageJsonStr = null;
 
-        final String DRINK_BASE_URL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?";
-        final String QUERY_PARAM = "s";
-        Uri builtUri = Uri.parse(DRINK_BASE_URL).buildUpon()
-                .appendQueryParameter(QUERY_PARAM, param).build();
-
         try {
-            URL url = new URL(builtUri.toString());
+            URL url = new URL(buildURL(param));
 
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
@@ -69,5 +64,19 @@ public class CocktailAPI {
         }
 
         return beverageJsonStr;
+    }
+
+    public String buildURL(String param){
+        final String DRINK_BASE_URL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?";
+        final String QUERY_PARAM = "s=";
+        if (param.startsWith(" ")){
+            while (param.startsWith(" ")){
+                param = param.replaceFirst(" ", "");
+            }
+        }
+        if (param.contains(" ")){
+            param = param.replaceAll(" ", "_");
+        }
+        return DRINK_BASE_URL+QUERY_PARAM+param;
     }
 }
