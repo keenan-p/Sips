@@ -46,7 +46,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ff0000" />
+                                      <entry key="backgroundColor" value="000000" />
                                       <entry key="foregroundAssetType" value="TEXT" />
                                     </map>
                                   </option>

@@ -36,12 +36,4 @@
         <item name="android:layout_marginRight">20dp</item>
     </style>
 
-    <!--<style name="ActionBarStyle" parent="Theme.AppCompat.Light.DarkActionBar" >-->
-        <!--<item name="android:titleTextStyle">@style/ActionBarTitle</item>-->
-    <!--</style>-->
-
-    <!--<style name="ActionBarTitle" parent="Widget.AppCompat.ActionBar">-->
-        <!--<item name="android:textColor">@android:color/black</item>-->
-    <!--</style>-->
-
 </resources>
