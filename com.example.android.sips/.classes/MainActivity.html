@@ -1,0 +1,375 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MainActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.example.android.sips</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MainActivity (com.example.android.sips)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MainActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 29)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MainActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainActivity$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainActivity$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainActivity$FetchBeveragesTask</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 22)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 76)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.example.android.sips;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.Activity;
+<i>4</i>&nbsp;import android.app.SearchManager;
+<i>5</i>&nbsp;import android.content.Context;
+<i>6</i>&nbsp;import android.content.Intent;
+<i>7</i>&nbsp;import android.net.ConnectivityManager;
+<i>8</i>&nbsp;import android.net.NetworkInfo;
+<i>9</i>&nbsp;import android.os.AsyncTask;
+<i>10</i>&nbsp;import android.support.v7.app.AppCompatActivity;
+<i>11</i>&nbsp;import android.os.Bundle;
+<i>12</i>&nbsp;import android.util.Log;
+<i>13</i>&nbsp;import android.view.Menu;
+<i>14</i>&nbsp;import android.view.MenuInflater;
+<i>15</i>&nbsp;import android.view.MenuItem;
+<i>16</i>&nbsp;import android.view.View;
+<i>17</i>&nbsp;import android.view.inputmethod.InputMethodManager;
+<i>18</i>&nbsp;import android.widget.AdapterView;
+<i>19</i>&nbsp;import android.widget.ListView;
+<i>20</i>&nbsp;import android.widget.SearchView;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;import org.json.JSONException;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;import java.util.ArrayList;
+<i>25</i>&nbsp;
+<b class="nc"><i>26</i>&nbsp;public class MainActivity extends AppCompatActivity {</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    private ArrayList&lt;Beverage&gt; beverages;
+<i>29</i>&nbsp;    private BeverageAdapter adapter;
+<i>30</i>&nbsp;    private ListView beveragesListView;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    private boolean isConnectedToInternet() {
+<b class="nc"><i>33</i>&nbsp;        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);</b>
+<b class="nc"><i>34</i>&nbsp;        NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();</b>
+<i>35</i>&nbsp;
+<b class="nc"><i>36</i>&nbsp;        return (activeNetworkInfo != null &amp;&amp; activeNetworkInfo.isConnected());</b>
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    // credit to the community wiki on stackoverflow for this function
+<i>41</i>&nbsp;    public static void hideKeyboard(Activity activity) {
+<b class="nc"><i>42</i>&nbsp;        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);</b>
+<i>43</i>&nbsp;        //Find the currently focused view, so we can grab the correct window token from it.
+<b class="nc"><i>44</i>&nbsp;        View view = activity.getCurrentFocus();</b>
+<i>45</i>&nbsp;        //If no view currently has focus, create a new one, just so we can grab a window token from it
+<b class="nc"><i>46</i>&nbsp;        if (view == null) {</b>
+<b class="nc"><i>47</i>&nbsp;            view = new View(activity);</b>
+<i>48</i>&nbsp;        }
+<b class="nc"><i>49</i>&nbsp;        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);</b>
+<i>50</i>&nbsp;    }
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    @Override
+<i>53</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>54</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>55</i>&nbsp;        setContentView(R.layout.activity_main);</b>
+<i>56</i>&nbsp;
+<b class="nc"><i>57</i>&nbsp;        setTitle(&quot;Sips&quot;);</b>
+<i>58</i>&nbsp;
+<b class="nc"><i>59</i>&nbsp;        beverages = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>60</i>&nbsp;        beverages.add(new Beverage(&quot;Use the search bar to find beverages.&quot;, null, &quot;&quot;,</b>
+<i>61</i>&nbsp;                &quot;https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Vector_search_icon.svg/200px-Vector_search_icon.svg.png&quot;));
+<i>62</i>&nbsp;
+<b class="nc"><i>63</i>&nbsp;        beveragesListView = findViewById(R.id.beverage_list);</b>
+<i>64</i>&nbsp;
+<b class="nc"><i>65</i>&nbsp;        adapter = new BeverageAdapter(this, beverages);</b>
+<i>66</i>&nbsp;
+<b class="nc"><i>67</i>&nbsp;        beveragesListView.setAdapter(adapter);</b>
+<i>68</i>&nbsp;//        ListView beveragesListView = findViewById(R.id.drink_list);
+<i>69</i>&nbsp;//
+<i>70</i>&nbsp;//        adapter = new BeverageAdapter(this, beverages);
+<i>71</i>&nbsp;//
+<i>72</i>&nbsp;//        beveragesListView.setAdapter(adapter);
+<i>73</i>&nbsp;//
+<i>74</i>&nbsp;//        beveragesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+<i>75</i>&nbsp;//            @Override
+<i>76</i>&nbsp;//            public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+<i>77</i>&nbsp;//                Beverage beverage = beverages.get(position);
+<i>78</i>&nbsp;//                Intent recipeIntent = new Intent(MainActivity.this, RecipeActivity.class);
+<i>79</i>&nbsp;//                recipeIntent.putExtra(&quot;name&quot;, beverage.getName());
+<i>80</i>&nbsp;//                recipeIntent.putExtra(&quot;imgURL&quot;, beverage.getImageSource());
+<i>81</i>&nbsp;//                recipeIntent.putExtra(&quot;ingredients&quot;, beverage.getIngredients());
+<i>82</i>&nbsp;//                recipeIntent.putExtra(&quot;recipe&quot;, beverage.getRecipe());
+<i>83</i>&nbsp;//                startActivity(recipeIntent);
+<i>84</i>&nbsp;//            }
+<i>85</i>&nbsp;//        });
+<i>86</i>&nbsp;    }
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;    @Override
+<i>89</i>&nbsp;    public boolean onCreateOptionsMenu(Menu menu) {
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;        // inflate menu
+<b class="nc"><i>92</i>&nbsp;        MenuInflater inflater = getMenuInflater();</b>
+<b class="nc"><i>93</i>&nbsp;        inflater.inflate(R.menu.search_menu, menu);</b>
+<i>94</i>&nbsp;
+<b class="nc"><i>95</i>&nbsp;        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);</b>
+<b class="nc"><i>96</i>&nbsp;        final MenuItem searchMenuItem = menu.findItem(R.id.search_bar);</b>
+<b class="nc"><i>97</i>&nbsp;        SearchView searchView = (SearchView) searchMenuItem.getActionView();</b>
+<i>98</i>&nbsp;
+<b class="nc"><i>99</i>&nbsp;        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));</b>
+<b class="nc"><i>100</i>&nbsp;        searchView.setIconifiedByDefault(false);</b>
+<b class="nc"><i>101</i>&nbsp;        searchView.setSubmitButtonEnabled(true);</b>
+<i>102</i>&nbsp;
+<b class="nc"><i>103</i>&nbsp;        final Activity mainActivity = this;</b>
+<i>104</i>&nbsp;
+<b class="nc"><i>105</i>&nbsp;        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {</b>
+<i>106</i>&nbsp;            @Override
+<i>107</i>&nbsp;            public boolean onQueryTextSubmit(String query) {
+<b class="nc"><i>108</i>&nbsp;                if (isConnectedToInternet()) {</b>
+<i>109</i>&nbsp;
+<b class="nc"><i>110</i>&nbsp;                    beveragesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {</b>
+<i>111</i>&nbsp;                        @Override
+<i>112</i>&nbsp;                        public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+<b class="nc"><i>113</i>&nbsp;                            Beverage beverage = beverages.get(position);</b>
+<b class="nc"><i>114</i>&nbsp;                            Intent recipeIntent = new Intent(MainActivity.this, RecipeActivity.class);</b>
+<b class="nc"><i>115</i>&nbsp;                            recipeIntent.putExtra(&quot;name&quot;, beverage.getName());</b>
+<b class="nc"><i>116</i>&nbsp;                            recipeIntent.putExtra(&quot;imgURL&quot;, beverage.getImageSource());</b>
+<b class="nc"><i>117</i>&nbsp;                            recipeIntent.putExtra(&quot;ingredients&quot;, beverage.getIngredients());</b>
+<b class="nc"><i>118</i>&nbsp;                            recipeIntent.putExtra(&quot;recipe&quot;, beverage.getRecipe());</b>
+<b class="nc"><i>119</i>&nbsp;                            startActivity(recipeIntent);</b>
+<i>120</i>&nbsp;                        }
+<i>121</i>&nbsp;                    });
+<i>122</i>&nbsp;
+<b class="nc"><i>123</i>&nbsp;                    FetchBeveragesTask beveragesTask = new FetchBeveragesTask();</b>
+<b class="nc"><i>124</i>&nbsp;                    beveragesTask.execute(query);</b>
+<b class="nc"><i>125</i>&nbsp;                    searchMenuItem.collapseActionView();</b>
+<b class="nc"><i>126</i>&nbsp;                    hideKeyboard(mainActivity);</b>
+<b class="nc"><i>127</i>&nbsp;                }</b>
+<i>128</i>&nbsp;                else {
+<b class="nc"><i>129</i>&nbsp;                    beverages.clear();</b>
+<b class="nc"><i>130</i>&nbsp;                    beverages.add(new Beverage(&quot;No internet connection.&quot;, null, &quot;&quot;, &quot;&quot;));</b>
+<b class="nc"><i>131</i>&nbsp;                    adapter.notifyDataSetChanged();</b>
+<i>132</i>&nbsp;                }
+<i>133</i>&nbsp;
+<b class="nc"><i>134</i>&nbsp;                return true;</b>
+<i>135</i>&nbsp;            }
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;            @Override
+<i>138</i>&nbsp;            public boolean onQueryTextChange(String newText) {
+<b class="nc"><i>139</i>&nbsp;                return false;</b>
+<i>140</i>&nbsp;            }
+<i>141</i>&nbsp;        });
+<i>142</i>&nbsp;
+<b class="nc"><i>143</i>&nbsp;        searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {</b>
+<i>144</i>&nbsp;            @Override
+<i>145</i>&nbsp;            public boolean onMenuItemActionExpand(MenuItem item) {
+<b class="nc"><i>146</i>&nbsp;                return true;</b>
+<i>147</i>&nbsp;            }
+<i>148</i>&nbsp;
+<i>149</i>&nbsp;            @Override
+<i>150</i>&nbsp;            public boolean onMenuItemActionCollapse(MenuItem item) {
+<b class="nc"><i>151</i>&nbsp;                hideKeyboard(mainActivity);</b>
+<b class="nc"><i>152</i>&nbsp;                return true;</b>
+<i>153</i>&nbsp;            }
+<i>154</i>&nbsp;        });
+<i>155</i>&nbsp;
+<b class="nc"><i>156</i>&nbsp;        return true;</b>
+<i>157</i>&nbsp;    }
+<i>158</i>&nbsp;
+<b class="nc"><i>159</i>&nbsp;    private class FetchBeveragesTask extends AsyncTask&lt;String, Void, ArrayList&lt;Beverage&gt;&gt; {</b>
+<i>160</i>&nbsp;
+<i>161</i>&nbsp;        private ArrayList&lt;Beverage&gt; getBeverageDataFromJson(String beverageJsonStr) throws JSONException {
+<i>162</i>&nbsp;
+<b class="nc"><i>163</i>&nbsp;            JsonParser jsonParser = new JsonParser(beverageJsonStr);</b>
+<b class="nc"><i>164</i>&nbsp;            return jsonParser.parse();</b>
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;        }
+<i>167</i>&nbsp;
+<i>168</i>&nbsp;
+<i>169</i>&nbsp;
+<i>170</i>&nbsp;        @Override
+<i>171</i>&nbsp;        protected ArrayList&lt;Beverage&gt; doInBackground(String... params) {
+<i>172</i>&nbsp;
+<b class="nc"><i>173</i>&nbsp;            CocktailAPI api = new CocktailAPI(params[0]);</b>
+<b class="nc"><i>174</i>&nbsp;            String beverageJsonStr = api.getCocktailJson();</b>
+<i>175</i>&nbsp;
+<i>176</i>&nbsp;            try {
+<b class="nc"><i>177</i>&nbsp;                return getBeverageDataFromJson(beverageJsonStr);</b>
+<b class="nc"><i>178</i>&nbsp;            } catch (JSONException e) {</b>
+<b class="nc"><i>179</i>&nbsp;                Log.e(&quot;FetchBeverages&quot;, e.getMessage(), e);</b>
+<b class="nc"><i>180</i>&nbsp;                e.printStackTrace();</b>
+<i>181</i>&nbsp;            }
+<i>182</i>&nbsp;
+<b class="nc"><i>183</i>&nbsp;            return null;</b>
+<i>184</i>&nbsp;        }
+<i>185</i>&nbsp;
+<i>186</i>&nbsp;        @Override
+<i>187</i>&nbsp;        protected void onPostExecute(ArrayList&lt;Beverage&gt; result) {
+<b class="nc"><i>188</i>&nbsp;            if (result != null) {</b>
+<b class="nc"><i>189</i>&nbsp;                beverages.clear();</b>
+<i>190</i>&nbsp;
+<i>191</i>&nbsp;                // Load the text first.
+<b class="nc"><i>192</i>&nbsp;                int componentIndex = 0;</b>
+<i>193</i>&nbsp;
+<b class="nc"><i>194</i>&nbsp;                while (componentIndex &lt; result.size()) {</b>
+<b class="nc"><i>195</i>&nbsp;                    beverages.add(result.get(componentIndex));</b>
+<b class="nc"><i>196</i>&nbsp;                    componentIndex++;</b>
+<i>197</i>&nbsp;                }
+<b class="nc"><i>198</i>&nbsp;                adapter.notifyDataSetChanged();</b>
+<b class="nc"><i>199</i>&nbsp;            }</b>
+<i>200</i>&nbsp;            else {
+<b class="nc"><i>201</i>&nbsp;                beverages.clear();</b>
+<b class="nc"><i>202</i>&nbsp;                beverages.add(new Beverage(&quot;There are no results that match your search&quot;, null, &quot;&quot;, &quot;&quot;));</b>
+<b class="nc"><i>203</i>&nbsp;                adapter.notifyDataSetChanged();</b>
+<i>204</i>&nbsp;            }
+<b class="nc"><i>205</i>&nbsp;            beveragesListView.setSelectionAfterHeaderView();</b>
+<i>206</i>&nbsp;        }
+<i>207</i>&nbsp;    }
+<i>208</i>&nbsp;
+<i>209</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-12-10 16:28</div>
+</div>
+</body>
+</html>

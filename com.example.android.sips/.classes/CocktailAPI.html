@@ -1,0 +1,178 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CocktailAPI</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.example.android.sips</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CocktailAPI (com.example.android.sips)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CocktailAPI</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    27%
+  </span>
+  <span class="absValue">
+    (10/ 37)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.example.android.sips;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.net.Uri;
+<i>4</i>&nbsp;import android.util.Log;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.BufferedReader;
+<i>7</i>&nbsp;import java.io.IOException;
+<i>8</i>&nbsp;import java.io.InputStream;
+<i>9</i>&nbsp;import java.io.InputStreamReader;
+<i>10</i>&nbsp;import java.net.HttpURLConnection;
+<i>11</i>&nbsp;import java.net.MalformedURLException;
+<i>12</i>&nbsp;import java.net.URL;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;/**
+<i>15</i>&nbsp; * Class that connects to and queries API
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;public class CocktailAPI {
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    private String param;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * Constructor for the class
+<i>23</i>&nbsp;     * @param param the search terms which will be asked for from the API
+<i>24</i>&nbsp;     */
+<b class="fc"><i>25</i>&nbsp;    public CocktailAPI(String param) {</b>
+<b class="fc"><i>26</i>&nbsp;        this.param = param;</b>
+<b class="fc"><i>27</i>&nbsp;    }</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * Method to connect to and query the API
+<i>31</i>&nbsp;     * @return a String representing the JSON returned by the API
+<i>32</i>&nbsp;     */
+<i>33</i>&nbsp;    public String getCocktailJson() {
+<b class="nc"><i>34</i>&nbsp;        HttpURLConnection urlConnection = null;</b>
+<b class="nc"><i>35</i>&nbsp;        BufferedReader reader = null;</b>
+<b class="nc"><i>36</i>&nbsp;        String beverageJsonStr = null;</b>
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;        try {
+<b class="nc"><i>39</i>&nbsp;            URL url = new URL(buildURL(param)); //call method to get properly formatted URL</b>
+<i>40</i>&nbsp;
+<b class="nc"><i>41</i>&nbsp;            urlConnection = (HttpURLConnection) url.openConnection(); //open connection</b>
+<b class="nc"><i>42</i>&nbsp;            urlConnection.setRequestMethod(&quot;GET&quot;);</b>
+<b class="nc"><i>43</i>&nbsp;            urlConnection.connect();</b>
+<i>44</i>&nbsp;
+<b class="nc"><i>45</i>&nbsp;            InputStream inputStream = urlConnection.getInputStream(); // read the input stream into the string</b>
+<b class="nc"><i>46</i>&nbsp;            StringBuilder buffer = new StringBuilder();</b>
+<b class="nc"><i>47</i>&nbsp;            reader = new BufferedReader(new InputStreamReader(inputStream));</b>
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;            String line;
+<b class="nc"><i>50</i>&nbsp;            while ((line = reader.readLine()) != null) { //add each line of the queried page to the string</b>
+<b class="nc"><i>51</i>&nbsp;                buffer.append(line).append(&quot;\n&quot;);</b>
+<i>52</i>&nbsp;            }
+<i>53</i>&nbsp;
+<b class="nc"><i>54</i>&nbsp;            beverageJsonStr = buffer.toString();</b>
+<i>55</i>&nbsp;
+<b class="nc"><i>56</i>&nbsp;        } catch (MalformedURLException e) {  //must handle various exceptions that may occur</b>
+<b class="nc"><i>57</i>&nbsp;            Log.e(&quot;MalformedURLException&quot;, &quot;error&quot;);</b>
+<b class="nc"><i>58</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>59</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>60</i>&nbsp;            e.printStackTrace();</b>
+<i>61</i>&nbsp;        } finally { //these must take place in any case to make sure that the connection/reader is closed
+<b class="nc"><i>62</i>&nbsp;            if (urlConnection != null) {</b>
+<b class="nc"><i>63</i>&nbsp;                urlConnection.disconnect();</b>
+<i>64</i>&nbsp;            }
+<b class="nc"><i>65</i>&nbsp;            if (reader != null) {</b>
+<i>66</i>&nbsp;                try {
+<b class="nc"><i>67</i>&nbsp;                    reader.close();</b>
+<i>68</i>&nbsp;                }
+<b class="nc"><i>69</i>&nbsp;                catch (final IOException e){</b>
+<b class="nc"><i>70</i>&nbsp;                    Log.e(&quot;FetchBeverages&quot;, &quot;Error closing stream&quot;, e);</b>
+<b class="nc"><i>71</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>72</i>&nbsp;                }</b>
+<i>73</i>&nbsp;            }
+<i>74</i>&nbsp;        }
+<i>75</i>&nbsp;
+<b class="nc"><i>76</i>&nbsp;        return beverageJsonStr;</b>
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    /**
+<i>80</i>&nbsp;     * Method to construct a URL to query
+<i>81</i>&nbsp;     * @param param the search terms entered by the user
+<i>82</i>&nbsp;     * @return String representing URL which will be contacted
+<i>83</i>&nbsp;     */
+<i>84</i>&nbsp;    public String buildURL(String param){
+<b class="fc"><i>85</i>&nbsp;        final String DRINK_BASE_URL = &quot;https://www.thecocktaildb.com/api/json/v1/1/search.php?&quot;; //this appears for all queries</b>
+<b class="fc"><i>86</i>&nbsp;        final String QUERY_PARAM = &quot;s=&quot;; //for all drinks, we use this parameter</b>
+<b class="fc"><i>87</i>&nbsp;        if (param.startsWith(&quot; &quot;)){ //must format the entered search terms into a proper URL readable by the API</b>
+<b class="fc"><i>88</i>&nbsp;             param = param.trim(); //accidentally typing in spaces to start will be handled</b>
+<i>89</i>&nbsp;        }
+<b class="fc"><i>90</i>&nbsp;        if (param.contains(&quot; &quot;)){ //any spaces between words (long island iced tea) must be replaced with _ to be read properly</b>
+<b class="fc"><i>91</i>&nbsp;            param = param.replaceAll(&quot; &quot;, &quot;_&quot;);</b>
+<i>92</i>&nbsp;        }
+<b class="fc"><i>93</i>&nbsp;        return DRINK_BASE_URL+QUERY_PARAM+param; //construct and return the final url</b>
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-12-10 16:28</div>
+</div>
+</body>
+</html>
