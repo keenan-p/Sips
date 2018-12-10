@@ -85,9 +85,7 @@ public class CocktailAPI {
         final String DRINK_BASE_URL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?"; //this appears for all queries
         final String QUERY_PARAM = "s="; //for all drinks, we use this parameter
         if (param.startsWith(" ")){ //must format the entered search terms into a proper URL readable by the API
-            while (param.startsWith(" ")){
-                param = param.replaceFirst(" ", ""); //accidentally typing in spaces to start will be handled
-            }
+             param = param.trim(); //accidentally typing in spaces to start will be handled
         }
         if (param.contains(" ")){ //any spaces between words (long island iced tea) must be replaced with _ to be read properly
             param = param.replaceAll(" ", "_");
