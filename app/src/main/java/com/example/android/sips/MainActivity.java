@@ -202,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 beverages.add(new Beverage("There are no results that match your search", null, "", ""));
                 adapter.notifyDataSetChanged();
             }
+            beveragesListView.setSelectionAfterHeaderView();
         }
     }
 

@@ -1,0 +1,212 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Beverage</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.example.android.sips</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Beverage (com.example.android.sips)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Beverage</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (2/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    44.4%
+  </span>
+  <span class="absValue">
+    (12/ 27)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.example.android.sips;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.graphics.Bitmap;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.ArrayList;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * Class that models a beverage/cocktail
+<i>9</i>&nbsp; */
+<i>10</i>&nbsp;class Beverage {
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    private String name;
+<i>13</i>&nbsp;    private Bitmap thumbnail;
+<i>14</i>&nbsp;    private String ingredients;
+<i>15</i>&nbsp;    private String imageSource;
+<i>16</i>&nbsp;    private String recipe;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    /**
+<i>19</i>&nbsp;     * Constructor for the class
+<i>20</i>&nbsp;     * @param name name of the cocktail
+<i>21</i>&nbsp;     * @param ingredientsArray ingredients used to make drink
+<i>22</i>&nbsp;     * @param recipe instructions for making the drink
+<i>23</i>&nbsp;     * @param imageSource URL for thumbnail of drink
+<i>24</i>&nbsp;     */
+<b class="fc"><i>25</i>&nbsp;    public Beverage (String name, ArrayList&lt;String&gt; ingredientsArray, String recipe, String imageSource) {</b>
+<b class="fc"><i>26</i>&nbsp;        this.name = name;</b>
+<b class="fc"><i>27</i>&nbsp;        this.imageSource = imageSource;</b>
+<b class="fc"><i>28</i>&nbsp;        this.recipe = recipe;</b>
+<b class="fc"><i>29</i>&nbsp;        this.ingredients = createIngredientsString(ingredientsArray); //to simplify the constructor, added a method to do the string creation</b>
+<i>30</i>&nbsp;
+<b class="fc"><i>31</i>&nbsp;    }</b>
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    /**
+<i>34</i>&nbsp;     * Method to create the ingredient String
+<i>35</i>&nbsp;     * @param ingredientsArray array from which information will be pulled to make String
+<i>36</i>&nbsp;     * @return String representation of ingredients
+<i>37</i>&nbsp;     */
+<i>38</i>&nbsp;    public String createIngredientsString(ArrayList&lt;String&gt; ingredientsArray){ //decided to transform the input from an ArrayList to String for easier display
+<b class="fc"><i>39</i>&nbsp;        String ingredients = &quot;&quot;;</b>
+<b class="fc"><i>40</i>&nbsp;        if (ingredientsArray != null) {</b>
+<b class="fc"><i>41</i>&nbsp;            for (int i = 0; i &lt; ingredientsArray.size(); i++) {</b>
+<b class="fc"><i>42</i>&nbsp;                ingredients = ingredients + &quot;- &quot; + ingredientsArray.get(i) + &quot;\n&quot;; //after this method, [1 oz tequila, 1 oz lime] will look like &quot;- 1 oz tequila</b>
+<i>43</i>&nbsp;                                                                                                                                                //- 1 oz lime&quot;
+<i>44</i>&nbsp;            }
+<b class="fc"><i>45</i>&nbsp;            ingredients = ingredients.substring(0, ingredients.lastIndexOf(&#39;\n&#39;)); //remove the last newline</b>
+<i>46</i>&nbsp;        }
+<b class="fc"><i>47</i>&nbsp;        return ingredients;</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    /**
+<i>51</i>&nbsp;     * Setter for name
+<i>52</i>&nbsp;     * @param name String name you want to change to
+<i>53</i>&nbsp;     */
+<i>54</i>&nbsp;    public void setName(String name) {
+<b class="nc"><i>55</i>&nbsp;        this.name = name;</b>
+<b class="nc"><i>56</i>&nbsp;    }</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    /**
+<i>59</i>&nbsp;     * Getter for name
+<i>60</i>&nbsp;     * @return String name of drink
+<i>61</i>&nbsp;     */
+<i>62</i>&nbsp;    public String getName() {
+<b class="nc"><i>63</i>&nbsp;        return name;</b>
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    /**
+<i>67</i>&nbsp;     * Setter for thumbnail
+<i>68</i>&nbsp;     * @param thumbnail bitmap to change thumbnail to
+<i>69</i>&nbsp;     */
+<i>70</i>&nbsp;    public void setThumbnail(Bitmap thumbnail) {
+<b class="nc"><i>71</i>&nbsp;        this.thumbnail = thumbnail;</b>
+<b class="nc"><i>72</i>&nbsp;    }</b>
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;    /**
+<i>75</i>&nbsp;     * Getter for thumbnail
+<i>76</i>&nbsp;     * @return bitmap of thumbnail
+<i>77</i>&nbsp;     */
+<i>78</i>&nbsp;    public Bitmap getThumbnail() {
+<b class="nc"><i>79</i>&nbsp;        return thumbnail;</b>
+<i>80</i>&nbsp;    }
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    /**
+<i>83</i>&nbsp;     * Getter for ingredients
+<i>84</i>&nbsp;     * @return String of ingredients used to make the drink
+<i>85</i>&nbsp;     */
+<i>86</i>&nbsp;    public String getIngredients() {
+<b class="nc"><i>87</i>&nbsp;        return ingredients;</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    /**
+<i>91</i>&nbsp;     * Getter for image source
+<i>92</i>&nbsp;     * @return String URL of the image&#39;s source
+<i>93</i>&nbsp;     */
+<i>94</i>&nbsp;    public String getImageSource() {
+<b class="nc"><i>95</i>&nbsp;        return imageSource;</b>
+<i>96</i>&nbsp;    }
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;    /**
+<i>99</i>&nbsp;     * Getter for recipe
+<i>100</i>&nbsp;     * @return String of recipe used to make drink
+<i>101</i>&nbsp;     */
+<i>102</i>&nbsp;    public String getRecipe() {
+<b class="nc"><i>103</i>&nbsp;        return recipe;</b>
+<i>104</i>&nbsp;    }
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;    /**
+<i>107</i>&nbsp;     * Setter for ingredients
+<i>108</i>&nbsp;     * @param ingredients String of ingredients to change to
+<i>109</i>&nbsp;     */
+<i>110</i>&nbsp;    public void setIngredients(String ingredients) {
+<b class="nc"><i>111</i>&nbsp;        this.ingredients = ingredients;</b>
+<b class="nc"><i>112</i>&nbsp;    }</b>
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;    /**
+<i>115</i>&nbsp;     * Setter for image source
+<i>116</i>&nbsp;     * @param imageSource String URL of new image source
+<i>117</i>&nbsp;     */
+<i>118</i>&nbsp;    public void setImageSource(String imageSource) {
+<b class="nc"><i>119</i>&nbsp;        this.imageSource = imageSource;</b>
+<b class="nc"><i>120</i>&nbsp;    }</b>
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;    /**
+<i>123</i>&nbsp;     * Setter for recipe
+<i>124</i>&nbsp;     * @param recipe String recipe to change to
+<i>125</i>&nbsp;     */
+<i>126</i>&nbsp;    public void setRecipe(String recipe) {
+<b class="nc"><i>127</i>&nbsp;        this.recipe = recipe;</b>
+<b class="nc"><i>128</i>&nbsp;    }</b>
+<i>129</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-12-10 13:56</div>
+</div>
+</body>
+</html>
