@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,29 +16,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Beverage> beverages;
     private BeverageAdapter adapter;
-    private EditText searchBar;
+    private ListView beveragesListView;
 
     private boolean isConnectedToInternet() {
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -73,24 +60,29 @@ public class MainActivity extends AppCompatActivity {
         beverages.add(new Beverage("Use the search bar to find beverages.", null, "",
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Vector_search_icon.svg/200px-Vector_search_icon.svg.png"));
 
-        ListView beveragesListView = findViewById(R.id.drink_list);
+        beveragesListView = findViewById(R.id.beverage_list);
 
         adapter = new BeverageAdapter(this, beverages);
 
         beveragesListView.setAdapter(adapter);
-
-        beveragesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Beverage beverage = beverages.get(position);
-                Intent recipeIntent = new Intent(MainActivity.this, RecipeActivity.class);
-                recipeIntent.putExtra("name", beverage.getName());
-                recipeIntent.putExtra("imgURL", beverage.getImageSource());
-                recipeIntent.putExtra("ingredients", beverage.getIngredients());
-                recipeIntent.putExtra("recipe", beverage.getRecipe());
-                startActivity(recipeIntent);
-            }
-        });
+//        ListView beveragesListView = findViewById(R.id.drink_list);
+//
+//        adapter = new BeverageAdapter(this, beverages);
+//
+//        beveragesListView.setAdapter(adapter);
+//
+//        beveragesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Beverage beverage = beverages.get(position);
+//                Intent recipeIntent = new Intent(MainActivity.this, RecipeActivity.class);
+//                recipeIntent.putExtra("name", beverage.getName());
+//                recipeIntent.putExtra("imgURL", beverage.getImageSource());
+//                recipeIntent.putExtra("ingredients", beverage.getIngredients());
+//                recipeIntent.putExtra("recipe", beverage.getRecipe());
+//                startActivity(recipeIntent);
+//            }
+//        });
     }
 
     @Override
@@ -114,6 +106,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (isConnectedToInternet()) {
+
+                    beveragesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Beverage beverage = beverages.get(position);
+                            Intent recipeIntent = new Intent(MainActivity.this, RecipeActivity.class);
+                            recipeIntent.putExtra("name", beverage.getName());
+                            recipeIntent.putExtra("imgURL", beverage.getImageSource());
+                            recipeIntent.putExtra("ingredients", beverage.getIngredients());
+                            recipeIntent.putExtra("recipe", beverage.getRecipe());
+                            startActivity(recipeIntent);
+                        }
+                    });
+
                     FetchBeveragesTask beveragesTask = new FetchBeveragesTask();
                     beveragesTask.execute(query);
                     searchMenuItem.collapseActionView();

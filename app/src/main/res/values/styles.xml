@@ -10,16 +10,38 @@
     </style>
 
     <style name="RecipeTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@android:color/white</item>
-        <item name="actionBarStyle">@style/ActionBarStyle</item>
+        <!--<item name="colorPrimary">@android:color/white</item>-->
+        <!--<item name="actionBarStyle">@style/ActionBarStyle</item>-->
     </style>
 
-    <style name="ActionBarStyle" parent="Theme.AppCompat.Light.DarkActionBar" >
-        <item name="android:titleTextStyle">@style/ActionBarTitle</item>
-    </style>
-
-    <style name="ActionBarTitle" parent="Widget.AppCompat.ActionBar">
+    <style name="HeaderStyle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
     </style>
+
+    <style name="ParagraphStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+    </style>
+
+    <!--<style name="ActionBarStyle" parent="Theme.AppCompat.Light.DarkActionBar" >-->
+        <!--<item name="android:titleTextStyle">@style/ActionBarTitle</item>-->
+    <!--</style>-->
+
+    <!--<style name="ActionBarTitle" parent="Widget.AppCompat.ActionBar">-->
+        <!--<item name="android:textColor">@android:color/black</item>-->
+    <!--</style>-->
 
 </resources>

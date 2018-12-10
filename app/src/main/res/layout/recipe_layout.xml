@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@android:color/white">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="0dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/beverage_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <!--<TextView-->
+        <!--android:id="@+id/beverage_name"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
 
     <ImageView
         android:id="@+id/beverage_image"
@@ -18,23 +21,21 @@
         android:scaleType="centerCrop"/>
 
     <TextView
+        style="@style/HeaderStyle"
+        android:text="Ingredients" />
+
+    <TextView
         android:id="@+id/ingredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        style="@style/ParagraphStyle" />
+
+    <TextView
+        style="@style/HeaderStyle"
+        android:text="Instructions" />
 
     <TextView
         android:id="@+id/recipe"
-        android:layout_width="match_parent"
-        android:text="Cut the half lime in half again.
-Add the lime, falernum, and bitters to a rocks glass.
-Muddle.
-Add the rum.
-(Aged Barbados rum such as Plantation 5 Year is recommended).
-Add ice and stir.
-Float the blackstrap rum on top.
-Serve with a straw.
-
-Serve: Old-fashioned glass"
-        android:layout_height="wrap_content" />
+        android:layout_marginBottom="20dp"
+        style="@style/ParagraphStyle" />
 
 </LinearLayout>
+</ScrollView>

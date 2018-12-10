@@ -6,7 +6,7 @@
     android:padding="16dp">
 
     <ListView
-        android:id="@+id/drink_list"
+        android:id="@+id/beverage_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
