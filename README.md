@@ -1,2 +1,2 @@
-# 591Project
+# Sips
 ![](sipsDemo.gif)
