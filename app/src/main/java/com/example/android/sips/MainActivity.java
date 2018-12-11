@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
 
         return (activeNetworkInfo != null && activeNetworkInfo.isConnected());
-
     }
 
     /**
@@ -162,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-                    //
+                    // FetchBeveragesTask is a subclass of AsyncTask that is used to query
+                    // the API on a background thread
                     FetchBeveragesTask beveragesTask = new FetchBeveragesTask();
                     beveragesTask.execute(query);
                     searchMenuItem.collapseActionView();
@@ -212,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
 
         return true;
     }
