@@ -1,8 +1,6 @@
 package com.example.android.sips;
 
-import android.net.Uri;
 import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,13 +50,15 @@ public class CocktailAPI {
             }
 
             beverageJsonStr = buffer.toString();
-
-        } catch (MalformedURLException e) {  //must handle various exceptions that may occur
+        }
+        catch (MalformedURLException e) {  //must handle various exceptions that may occur
             Log.e("MalformedURLException", "error");
             e.printStackTrace();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
-        } finally { //these must take place in any case to make sure that the connection/reader is closed
+        }
+        finally { //these must take place in any case to make sure that the connection/reader is closed
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }

@@ -8,11 +8,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <!--<TextView-->
-        <!--android:id="@+id/beverage_name"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" />-->
-
     <ImageView
         android:id="@+id/beverage_image"
         android:layout_width="match_parent"
